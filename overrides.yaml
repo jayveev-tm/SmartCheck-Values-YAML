@@ -1,0 +1,16 @@
+activationCode: YOUR-CODE-HERE
+
+auth:
+  secretSeed: YOUR-SECRET-HERE
+
+db:
+  user: postgres
+  password: password
+  host: database.example.com
+  port: 5432
+  tls:
+    ca:
+      valueFrom:
+        configMapKeyRef:
+          name: dssc-db-trust
+          key: ca
