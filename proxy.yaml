@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxy
+  annotations:
+    {{ toYaml .Values.service.annotations | indent 4 | trim }}
+  labels:
+    service: proxy
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+{{- range $k, $v := (default (dict) .Values.extraLabels) }}
+    {{ $k }}: {{ quote $v }}
+{{- end }}
+spec:
+  type: {{ default "LoadBalancer" .Values.service.type }}
+  ports:
+    - port: {{ default 443 .Values.service.httpsPort }}
+      targetPort: 8443
+      protocol: TCP
+      name: https
